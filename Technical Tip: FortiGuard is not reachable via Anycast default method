@@ -1,0 +1,51 @@
+Per default FortiOS, 6.4.3 and above is using the Anycast method to address the Fortiguard servers.
+Relying on Fortinet DNS servers, the FortiGate will get a single IP address for the domain name of each FortiGuard service.
+
+In some circumstances Anycast does not work:
+
+
+This can be verified with the debug command '# diagnose debug rating':
+ 
+# diagnose debug rating
+Locale       : english
+Service      : Web-filter
+Status       : Enable
+License      : Contract 
+Service      : Antispam
+Status       : Disable 
+Service      : Virus Outbreak Prevention
+Status       : Disable 
+Num. of servers : 1
+Protocol        : https
+Port            : 443
+Anycast         : Enable
+Default servers : Included
+-=- Server List (Tue Nov  3 17:47:32 2020) -=-
+ IP                                             Weight    RTT Flags   TZ    Packets  Curr Lost Total Lost             Updated Time
+173.243.140.16                                      0      0 DIF      0         14         11         11
+ 
+If a high value of the current loss is noticed, run '# execute traceroute X.X.X.X' to see if the FortiGuard server can be reached (while X.X.X.X is the failing IP of '# diagnose debug rating').
+
+If the Server cannot be reached, choose between the following options to workaround this issue:
+
+1) Switch to other Anycast servers:
+ 
+# config system fortiguard                                   
+   set fortiguard-anycast-source aws                           
+end                         
+ 
+2) Disable Anycast and use HTTPS with port 8888.
+ 
+# config system fortiguard
+    set fortiguard-anycast disable
+    set protocol https 
+    set port 8888
+end
+ 
+3) Disable Anycast and use UDP with Port 53.
+ 
+# config system fortiguard
+   set fortiguard-anycast disable
+   set protocol udp
+   set port 53
+end
