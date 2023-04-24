@@ -1,0 +1,23 @@
+Technical Tip: Firewall does not block incoming (WAN to LAN) connection even though deny policy
+Description
+This article describes a scenario where the firewall does not block the incoming WAN to LAN connection for a specific IP even though a deny policy is configured.
+
+There is an inbound NAT to access an internal web server from external network but we wish to block one specific external IP from accessing it.
+
+Even though a deny policy is configured above the allowed policy with the source as the IP of the external client, still it does not trigger the firewall policy.
+
+Solution
+VIP
+
+In order to block the traffic from the denied source, it is necessary to edit the denied firewall policy from the CLI and run the following command:
+set match-vip enable
+Note:
+
+Since 6.4.3 it is only possible to use this option for DENY policies. It is not available anymore for ACCEPT policies
+
+
+After enabling the above option,the DNATed packets that are not matched by a VIP policy are matched with the general policy where they can be explicitly dropped and logged.
+
+Or
+
+Always configure the deny policy with the destination address as the VIP for which traffic is denied instead of 'All'.
