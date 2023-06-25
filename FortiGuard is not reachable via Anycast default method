@@ -1,4 +1,4 @@
-Per default FortiOS, 6.4.3 and above is using the Anycast method to address the Fortiguard servers.
+ FortiOS, 6.4.3 and above is using the Anycast method to address the Fortiguard servers.
 Relying on Fortinet DNS servers, the FortiGate will get a single IP address for the domain name of each FortiGuard service.
 
 In some circumstances Anycast does not work:
