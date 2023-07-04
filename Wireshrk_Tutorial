@@ -1,0 +1,40 @@
+Display Filterls Wireshark 
+
+ipv4 = ip.addr==10.43.0.1
+
+source =ip.src==10.43.0.1
+
+Subnet = ip.addr==10.10.10.0/24
+
+Tcp port = tcp.port==80
+
+Tcp Syns = tcp.flags.syn==1
+
+TCP.PORT ==80 # IT means we are saying filter at the layer four level that means anything happens over port  including fins sysn reset even if it doenst have payload 
+
+ http # this will give me the packets with paylaod gonna show me when i actually have tcp information  
+
+  ARP # filter arp tarrafic 
+
+  udp # filter udp  tarrafic 
+
+
+  ################
+
+operatorts in wireshark 
+
+==  !  || &&  >  < 
+eq  not or and gt lt 
+ 
+
+  !tcp  ##   when you dont want tcp conversation 
+
+    !(arp or stp or lldp or)  
+
+
+    Ring buffer ####   
+
+
+    dumpcap 
+
+    ping ip -s 1600 
